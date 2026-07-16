@@ -22,12 +22,11 @@ contract PDSCWorkshopToken is ERC20, ERC20Burnable, Ownable, ERC20Permit {
 
     event RewardClaimed(address indexed user, uint256 amount);
 
-    constructor(
-        address workshop_,
-        address recipient,
-        address initialOwner,
-        uint256 claimAmount_
-    ) ERC20("PDSC Workshop 2026", "PDSC") Ownable(initialOwner) ERC20Permit("PDSC Workshop 2026") {
+    constructor(address workshop_, address recipient, address initialOwner, uint256 claimAmount_)
+        ERC20("PDSC Workshop 2026", "PDSC")
+        Ownable(initialOwner)
+        ERC20Permit("PDSC Workshop 2026")
+    {
         if (workshop_ == address(0) || recipient == address(0) || initialOwner == address(0)) {
             revert ZeroAddress();
         }

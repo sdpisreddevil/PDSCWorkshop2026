@@ -15,12 +15,7 @@ import {PDSCWorkshopItems} from "../src/PDSCWorkshopItems.sol";
 contract DeployAllScript is Script {
     function run()
         public
-        returns (
-            PDSCWorkshop2026 workshop,
-            PDSCWorkshopToken token,
-            PDSCWorkshopBadge badge,
-            PDSCWorkshopItems items
-        )
+        returns (PDSCWorkshop2026 workshop, PDSCWorkshopToken token, PDSCWorkshopBadge badge, PDSCWorkshopItems items)
     {
         uint256 claimAmount = vm.envOr("CLAIM_AMOUNT", uint256(100 ether));
         uint256 deployerKey = vm.envOr("PRIVATE_KEY", uint256(0));

@@ -26,7 +26,9 @@ contract PDSCWorkshopBadge is ERC721, ERC721Burnable, Ownable {
         ERC721("PDSC Workshop 2026 Badge", "PDSCB")
         Ownable(initialOwner)
     {
-        if (workshop_ == address(0) || initialOwner == address(0)) revert ZeroAddress();
+        if (workshop_ == address(0) || initialOwner == address(0)) {
+            revert ZeroAddress();
+        }
         workshop = PDSCWorkshop2026(workshop_);
     }
 

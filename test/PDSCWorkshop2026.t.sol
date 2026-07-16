@@ -48,9 +48,7 @@ contract PDSCWorkshop2026Test is Test {
 
     function test_Join_RevertIfIncorrectFee() public {
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(PDSCWorkshop2026.IncorrectJoiningFee.selector, DEFAULT_FEE, 1 wei)
-        );
+        vm.expectRevert(abi.encodeWithSelector(PDSCWorkshop2026.IncorrectJoiningFee.selector, DEFAULT_FEE, 1 wei));
         workshop.join{value: 1 wei}();
     }
 
