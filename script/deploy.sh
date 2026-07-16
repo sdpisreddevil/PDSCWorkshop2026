@@ -5,12 +5,13 @@
 #   ./script/deploy.sh registration [rpc]
 #   ./script/deploy.sh token [rpc]          # needs WORKSHOP_ADDRESS
 #   ./script/deploy.sh badge [rpc]          # needs WORKSHOP_ADDRESS
-#   ./script/deploy.sh all [rpc]            # deploys registration + token + badge
+#   ./script/deploy.sh items [rpc]          # needs WORKSHOP_ADDRESS (ERC-1155)
+#   ./script/deploy.sh all [rpc]            # registration + token + badge + items
 #
 # Examples:
 #   ./script/deploy.sh all http://127.0.0.1:8545
 #   ./script/deploy.sh registration sepolia
-#   WORKSHOP_ADDRESS=0x... ./script/deploy.sh token http://127.0.0.1:8545
+#   WORKSHOP_ADDRESS=0x... ./script/deploy.sh items http://127.0.0.1:8545
 
 set -euo pipefail
 
@@ -26,7 +27,7 @@ fi
 
 TARGET="${1:-}"
 if [[ -z "$TARGET" ]]; then
-  echo "Usage: ./script/deploy.sh <registration|token|badge|all> [rpc-url-or-name]"
+  echo "Usage: ./script/deploy.sh <registration|token|badge|items|all> [rpc-url-or-name]"
   exit 1
 fi
 shift
@@ -65,12 +66,19 @@ case "$TARGET" in
     fi
     SCRIPT="script/PDSCWorkshopBadge.s.sol:PDSCWorkshopBadgeScript"
     ;;
+  items|erc1155)
+    if [[ -z "${WORKSHOP_ADDRESS:-}" ]]; then
+      echo "Error: WORKSHOP_ADDRESS is required to deploy the items."
+      exit 1
+    fi
+    SCRIPT="script/PDSCWorkshopItems.s.sol:PDSCWorkshopItemsScript"
+    ;;
   all)
     SCRIPT="script/DeployAll.s.sol:DeployAllScript"
     ;;
   *)
     echo "Unknown target: $TARGET"
-    echo "Use: registration | token | badge | all"
+    echo "Use: registration | token | badge | items | all"
     exit 1
     ;;
 esac

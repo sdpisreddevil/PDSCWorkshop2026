@@ -5,8 +5,9 @@ import {Script, console} from "forge-std/Script.sol";
 import {PDSCWorkshop2026} from "../src/PDSCWorkshop2026.sol";
 import {PDSCWorkshopToken} from "../src/PDSCWorkshopToken.sol";
 import {PDSCWorkshopBadge} from "../src/PDSCWorkshopBadge.sol";
+import {PDSCWorkshopItems} from "../src/PDSCWorkshopItems.sol";
 
-/// @notice Deploy the full PDSC Workshop 2026 suite: registration + ERC-20 + ERC-721.
+/// @notice Deploy the full PDSC Workshop 2026 suite: registration + ERC-20 + ERC-721 + ERC-1155.
 ///   forge script script/DeployAll.s.sol:DeployAllScript \
 ///     --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
 /// Or:
@@ -14,7 +15,12 @@ import {PDSCWorkshopBadge} from "../src/PDSCWorkshopBadge.sol";
 contract DeployAllScript is Script {
     function run()
         public
-        returns (PDSCWorkshop2026 workshop, PDSCWorkshopToken token, PDSCWorkshopBadge badge)
+        returns (
+            PDSCWorkshop2026 workshop,
+            PDSCWorkshopToken token,
+            PDSCWorkshopBadge badge,
+            PDSCWorkshopItems items
+        )
     {
         uint256 claimAmount = vm.envOr("CLAIM_AMOUNT", uint256(100 ether));
         uint256 deployerKey = vm.envOr("PRIVATE_KEY", uint256(0));
@@ -31,11 +37,13 @@ contract DeployAllScript is Script {
         workshop = new PDSCWorkshop2026(deployer);
         token = new PDSCWorkshopToken(address(workshop), deployer, deployer, claimAmount);
         badge = new PDSCWorkshopBadge(address(workshop), deployer);
+        items = new PDSCWorkshopItems(address(workshop), deployer);
 
         console.log("=== PDSC Workshop 2026 deployed ===");
         console.log("Registration:", address(workshop));
         console.log("ERC-20 Token:", address(token));
         console.log("ERC-721 Badge:", address(badge));
+        console.log("ERC-1155 Items:", address(items));
         console.log("Owner:", deployer);
         console.log("Joining fee (wei):", workshop.joiningFee());
         console.log("Claim amount:", claimAmount);

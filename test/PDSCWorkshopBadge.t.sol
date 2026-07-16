@@ -41,7 +41,13 @@ contract PDSCWorkshopBadgeTest is Test {
         assertEq(badge.ownerOf(0), alice);
         assertTrue(badge.hasClaimed(alice));
         assertEq(badge.badgeOf(alice), 0);
-        assertEq(badge.tokenURI(0), "https://pdsc.workshop/2026/nft/0");
+        assertEq(
+            badge.tokenURI(0),
+            string.concat(
+                "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/uploads/gr/d8cba194-bef3-484b-be34-4bdd80827afe.png",
+                "0"
+            )
+        );
     }
 
     function test_ClaimBadge_RevertIfNotRegistered() public {
