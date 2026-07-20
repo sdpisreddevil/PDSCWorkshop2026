@@ -18,3 +18,17 @@ docs/
 .env
 .env.*
 !.env.example
+
+# Editor files
+.DS_Store
+.vscode
+.idea
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.mypy_cache
